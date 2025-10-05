@@ -6,9 +6,9 @@ Feature: Alunos
     When eu acesso a página de "Desempenho por Disciplina"
     Then devo ver uma tabela com alunos e colunas de nota por disciplina
     And cada aluno deve apresentar uma cor de status:
-      | média >= 7.0 | verde  |
-      | 5.0 <= média < 7.0 | amarelo |
-      | média < 5.0 | vermelho |
+      | média >= 7.0       | verde    |
+      | 5.0 <= média < 7.0 | amarelo  |
+      | média < 5.0        | vermelho |
 
   Scenario: Filtrar por disciplina e ver somente alunos reprovados
     Given que estou na página de "Desempenho por Disciplina"
