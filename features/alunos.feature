@@ -1,2 +1,30 @@
 Feature: Alunos
   Description: Listagem de informações sobre o desempenho dos alunos em diferentes disciplinas, incluindo código de cores (vermelho, amarelo, verde) para destacar desempenho.
+
+  Scenario: Visualizar lista de alunos com cores por disciplina
+    Given que eu sou um usuário autenticado com permissão de professor
+    When eu acesso a página de "Desempenho por Disciplina"
+    Then devo ver uma tabela com alunos e colunas de nota por disciplina
+    And cada aluno deve apresentar uma cor de status:
+      | média >= 7.0 | verde  |
+      | 5.0 <= média < 7.0 | amarelo |
+      | média < 5.0 | vermelho |
+
+  Scenario: Filtrar por disciplina e ver somente alunos reprovados
+    Given que estou na página de "Desempenho por Disciplina"
+    When eu filtro pela disciplina "Cálculo I"
+    Then devo ver apenas alunos cuja nota final esteja < 5.0
+    And as linhas desses alunos devem aparecer com cor vermelha
+
+  Scenario: Impedir acesso à listagem de alunos para usuário sem permissão
+    Given que sou um usuário autenticado com perfil "Aluno"
+    When tento acessar a página "Desempenho por Disciplina"
+    Then devo ser redirecionado para uma página de erro de permissão
+    And devo ver a mensagem "Acesso negado: apenas professores podem visualizar o desempenho"
+
+  Scenario: Exibir aviso quando houver dados incompletos do aluno
+    Given que estou na página de "Desempenho por Disciplina"
+    And o sistema possui alunos com notas ausentes ou não cadastradas
+    When eu visualizo a lista de alunos
+    Then devo ver um aviso "Dados incompletos" ao lado do nome do aluno afetado
+    And a linha do aluno deve aparecer com cor cinza indicando informação pendente
