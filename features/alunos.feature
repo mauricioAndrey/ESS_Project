@@ -13,6 +13,7 @@ Feature: Alunos
   Scenario: Filtrar por disciplina e ver somente alunos reprovados
     Given que estou na página de "Desempenho por Disciplina"
     When eu filtro pela disciplina "Cálculo I"
+    And eu filtro pelo desempenho "< 5.0"
     Then devo ver apenas alunos cuja nota final esteja < 5.0
     And as linhas desses alunos devem aparecer com cor vermelha
 
