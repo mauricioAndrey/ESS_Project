@@ -37,3 +37,13 @@ Feature: Alunos
       | Verde    | Desempenho satisfatório     |
       | Amarelo  | Desempenho de atenção       |
       | Vermelho | Desempenho insatisfatório   |
+
+  Scenario: Exportar listagem do desempenho dos alunos em csv
+    Given que sou um usuário com permissão de professor
+    And estou na página de Desempenho 
+    And está filtrado por disciplina "Engenharia de Software"
+    When eu clico no botão de "Exportar em csv"
+    And deve aparecer opções para configurar como vai ser disposta a ordem das informações que vão ser exportadas
+    Then a lista é baixada como um arquivo .csv no computador do usuário 
+    
+    
