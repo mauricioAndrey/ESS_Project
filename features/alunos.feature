@@ -48,4 +48,9 @@ Feature: Alunos
     And deve aparecer opções para configurar como vai ser disposta a ordem das informações que vão ser exportadas
     Then a lista é baixada como um arquivo .csv no computador do usuário 
 
-  
+  Scenario: Exportar relatório de desempenho em formato CSV
+    Given que estou na página de "Desempenho por Disciplina"
+    And sou um usuário com permissão de professor 
+    When clico no botão "Exportar Relatório"
+    Then devo receber um arquivo CSV com a lista de alunos e suas médias por disciplina
+    And o arquivo deve conter as colunas: Nome, Disciplina, Média e Cor de Desempenho
