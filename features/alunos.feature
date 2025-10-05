@@ -48,6 +48,4 @@ Feature: Alunos
     And deve aparecer opções para configurar como vai ser disposta a ordem das informações que vão ser exportadas
     Then a lista é baixada como um arquivo .csv no computador do usuário 
 
-
-
-    
+  changing things
