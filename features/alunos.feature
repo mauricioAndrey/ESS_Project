@@ -29,3 +29,22 @@ Feature: Alunos
     When eu visualizo a lista de alunos
     Then devo ver um aviso "Dados incompletos" ao lado do nome do aluno afetado
     And a linha do aluno deve aparecer com cor cinza indicando informação pendente
+
+  Scenario: Exibir legenda de cores de desempenho
+    Given que estou na página de "Desempenho por Disciplina"
+    When clico no botão "Legenda de Cores"
+    Then devo ver um modal com a explicação das cores utilizadas:
+      | Cor      | Significado                 |
+      | Verde    | Desempenho satisfatório     |
+      | Amarelo  | Desempenho de atenção       |
+      | Vermelho | Desempenho insatisfatório   |
+
+  Scenario: Exportar listagem do desempenho dos alunos em csv
+    Given que sou um usuário com permissão de professor
+    And estou na página de Desempenho 
+    And está filtrado por disciplina "Engenharia de Software"
+    When eu clico no botão de "Exportar em csv"
+    And deve aparecer opções para configurar como vai ser disposta a ordem das informações que vão ser exportadas
+    Then a lista é baixada como um arquivo .csv no computador do usuário 
+    
+    
