@@ -23,7 +23,8 @@ Feature: Alunos
     And devo ver a mensagem "Acesso negado: apenas professores podem visualizar o desempenho"
 
   Scenario: Exibir aviso quando houver dados incompletos do aluno
-    Given que estou na página de "Desempenho por Disciplina"
+    Given que estou na página de "Desempenho por Disciplina" 
+    And sou um usuário com permissão de professor
     And o sistema possui alunos com notas ausentes ou não cadastradas
     When eu visualizo a lista de alunos
     Then devo ver um aviso "Dados incompletos" ao lado do nome do aluno afetado
