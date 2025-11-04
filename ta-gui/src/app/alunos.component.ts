@@ -45,6 +45,8 @@ import { AlunoService } from './aluno.service';
                     this.aluno = new Aluno();
                   } else {
                     this.cpfduplicado = true;
+                    // exibe alerta modal além da mensagem inline quando CPF já existe
+                    alert('Já existe um aluno com esse CPF');
                   } 
                 },
                 msg => { alert(msg.message); }
