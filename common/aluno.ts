@@ -2,7 +2,7 @@ export class Aluno {
   nome: string;
   cpf: string;
   email: string;
-  loginGitHub: string;
+  login: string;
   metas: Map<string,string>;
 
   constructor() {
@@ -13,7 +13,7 @@ export class Aluno {
     this.nome = "";
     this.cpf = "";
     this.email = "";
-    this.loginGitHub = "";
+    this.login = "";
     this.metas = new Map<string,string>();
   }
 
@@ -27,16 +27,22 @@ export class Aluno {
     this.nome = from.nome;
     this.cpf = from.cpf;
     this.email = from.email;
-    this.loginGitHub = from.loginGitHub;
+    this.login = from.login;
     this.copyMetasFrom(from.metas);
   }
 
-  copyMetasFrom(from: Map<string,string>): void {
+  copyMetasFrom(from: any): void {
     this.metas = new Map<string,string>();
     if (!from) return;
-    // Map não deve ser iterado com `for..in` — usar forEach para copiar chaves/valores
-    from.forEach((value: string, key: string) => {
-      this.metas.set(key, value);
-    });
+    // Aceita tanto Map quanto plain object (JSON) vindo pelo HTTP
+    if (from instanceof Map) {
+      from.forEach((value: string, key: string) => {
+        this.metas.set(key, value);
+      });
+    } else if (typeof from === 'object') {
+      for (const key of Object.keys(from)) {
+        this.metas.set(key, (from as any)[key]);
+      }
+    }
   }
 }

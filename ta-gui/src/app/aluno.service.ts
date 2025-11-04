@@ -8,6 +8,12 @@ import { Aluno } from '../../../common/aluno';
 @Injectable()
 export class AlunoService {
 
+  //roteiro SaaS
+  alunos: Aluno[] = [];
+  gravar(aluno: Aluno): void {
+    this.alunos.push(aluno);
+  }
+
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
   private taURL = 'http://localhost:3000';
 

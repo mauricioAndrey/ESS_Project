@@ -49,7 +49,17 @@ import { AlunoService } from './aluno.service';
                 },
                 msg => { alert(msg.message); }
               );    
-    } 
+    }
+
+    //Roteiro SaaS 
+    /*//ta dando erro 
+    alunos: Aluno[] = [];
+    gravar(a:Aluno):void{
+      this.alunoService.gravar(a);
+      this.alunos.push(a)
+      //this.aluno = {nome: "", cpf: "", email: "", loginGitHub: ""};
+    }
+    //*/
 
     onMove(): void {
        this.cpfduplicado = false;
