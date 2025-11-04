@@ -17,6 +17,10 @@
     <td><label>e-mail </label></td>
     <td><input [(ngModel)]="aluno.email" ></td>
  </tr>
+ <tr>
+    <td><label>login do GitHub </label></td>
+    <td><input [(ngModel)]="aluno.login" name="loginbox"></td>
+ </tr>
  </table>
 
   <table>
@@ -24,11 +28,13 @@
     <th>Nome</th>
     <th>CPF</th>
     <th>e-mail</th>
+    <th>login</th>
  </tr>
  <tr *ngFor="let a of alunos" name="alunolist">
     <td name="nomelist">{{a.nome}}</td>
     <td name="cpflist">{{a.cpf}}</td>
     <td>{{a.email}}</td>
+    <td name="loginlist">{{a.login}}</td>
  </tr>
  </table>
 
