@@ -30,8 +30,10 @@ export class Aluno {
 
   copyMetasFrom(from: Map<string,string>): void {
     this.metas = new Map<string,string>();
-    for (let key in from) {
-      this.metas[key] = from[key];
-    }
+    if (!from) return;
+    // Map não deve ser iterado com `for..in` — usar forEach para copiar chaves/valores
+    from.forEach((value: string, key: string) => {
+      this.metas.set(key, value);
+    });
   }
 }
