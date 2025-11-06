@@ -19,19 +19,24 @@ export class AlunoService {
 
   constructor(private http: HttpClient) {}
 
-  criar(aluno: Aluno): Observable<Aluno> {
+  criar(aluno: Aluno): Observable<any> {
     return this.http.post<any>(this.taURL + "/aluno", aluno, {headers: this.headers})
              .pipe( 
-                retry(2),
-                map( res => {if (res.success) {return aluno;} else {return null;}} )
+                retry(2)
               ); 
   }
 
-  atualizar(aluno: Aluno): Observable<Aluno> {
-    return this.http.put<any>(this.taURL + "/aluno",JSON.stringify(aluno), {headers: this.headers})          .pipe( 
-                retry(2),
-                map( res => {if (res.success) {return aluno;} else {return null;}} )
-              ); 
+  atualizar(aluno: Aluno): Observable<any> {
+    return this.http.put<any>(this.taURL + "/aluno",JSON.stringify(aluno), {headers: this.headers})
+              .pipe(
+                retry(2)
+              );
+  }
+
+  remover(cpf: string): Observable<any> {
+    const url = this.taURL + "/aluno/" + encodeURIComponent(cpf);
+    return this.http.delete<any>(url, {headers: this.headers})
+               .pipe(retry(2));
   }
 
   getAlunos(): Observable<Aluno[]> {

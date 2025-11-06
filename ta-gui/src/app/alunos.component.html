@@ -24,6 +24,10 @@
     <td><label>login do GitHub </label></td>
     <td><input [(ngModel)]="aluno.login" name="loginbox"></td>
  </tr>
+ <tr *ngIf="loginduplicado">
+    <td></td>
+    <td name="msgloginexistente">Já existe um aluno com esse login do GitHub</td>
+ </tr>
  </table>
 
   <table>
@@ -32,12 +36,14 @@
     <th>CPF</th>
     <th>e-mail</th>
     <th>login</th>
+   <th>Ações</th>
  </tr>
  <tr *ngFor="let a of alunos" name="alunolist">
     <td name="nomelist">{{a.nome}}</td>
     <td name="cpflist">{{a.cpf}}</td>
     <td>{{a.email}}</td>
     <td name="loginlist">{{a.login}}</td>
+   <td><button (click)="removerAluno(a.cpf)">Remover</button></td>
  </tr>
  </table>
 

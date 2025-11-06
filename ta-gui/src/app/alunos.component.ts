@@ -21,7 +21,8 @@ import { AlunoService } from './aluno.service';
     */
     aluno: Aluno = new Aluno();
     alunos: Aluno[] = [];
-    cpfduplicado: boolean = false;
+  cpfduplicado: boolean = false;
+  loginduplicado: boolean = false;
 
     constructor(private alunoService: AlunoService) {}
 
@@ -39,15 +40,23 @@ import { AlunoService } from './aluno.service';
         */  
        this.alunoService.criar(a.clone())
              .subscribe(
-                ar => {
-                  if (ar) {
-                    this.alunos.push(ar);
+                res => {
+                  if (res && res.success) {
+                    this.alunos.push(a.clone());
                     this.aluno = new Aluno();
-                  } else {
+                    this.cpfduplicado = false;
+                    this.loginduplicado = false;
+                  } else if (res && res.failure === 'cpf') {
                     this.cpfduplicado = true;
-                    // exibe alerta modal além da mensagem inline quando CPF já existe
+                    this.loginduplicado = false;
                     alert('Já existe um aluno com esse CPF');
-                  } 
+                  } else if (res && res.failure === 'login') {
+                    this.loginduplicado = true;
+                    this.cpfduplicado = false;
+                    alert('Já existe um aluno com esse login do GitHub');
+                  } else {
+                    alert('O aluno não pode ser cadastrado');
+                  }
                 },
                 msg => { alert(msg.message); }
               );    
@@ -64,7 +73,8 @@ import { AlunoService } from './aluno.service';
     //*/
 
     onMove(): void {
-       this.cpfduplicado = false;
+     this.cpfduplicado = false;
+     this.loginduplicado = false;
     }
 
      /* Executado após clicar no botão Alunos, 
@@ -78,5 +88,22 @@ import { AlunoService } from './aluno.service';
                msg => { alert(msg.message); }
               );
      }
+
+    removerAluno(cpf: string): void {
+      if (!confirm('Confirma remoção do aluno com CPF ' + cpf + '?')) return;
+      this.alunoService.remover(cpf)
+        .subscribe(
+          res => {
+            if (res && res.success) {
+              this.alunos = this.alunos.filter(a => a.cpf !== cpf);
+            } else if (res && res.failure === 'notfound') {
+              alert('Aluno não encontrado para remoção');
+            } else {
+              alert('Falha ao remover aluno');
+            }
+          },
+          err => { alert(err.message || err); }
+        );
+    }
 
   }
